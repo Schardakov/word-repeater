@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Practice Settings</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<main class="main-menu">
+  <!-- Practice Settings Card -->
+  <div class="practice-settings">
+    <header class="settings-header">
+      <span class="settings-title">Practice Settings</span>
+      <button class="account-btn">Account</button>
+    </header>
+
+    <div class="divider"></div>
+
+    <section class="settings-section">
+      <div class="section-label">Import files</div>
+      <div class="button-row import-row">
+        <button class="action-btn">From Device</button>
+        <button class="action-btn">From Account</button>
+        <button class="action-btn danger">Remove</button>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="settings-section">
+      <div class="section-label">Pick words</div>
+      <div class="button-row pick-row">
+        <div class="toggle-group">
+          <button class="toggle-btn active">Manually</button>
+          <button class="toggle-btn">Randomly</button>
+        </div>
+        <div class="repetition-box">
+          <span class="repetition-label">Repetitions</span>
+          <input type="number" class="repetition-input" value="5" min="1" />
+        </div>
+      </div>
+      <button class="primary-btn" id="studyBtn">Study</button>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="settings-section">
+      <div class="section-label">Test</div>
+      <div class="button-row test-row">
+        <div class="toggle-group" style="grid-column: 1 / -1;">
+          <button class="toggle-btn">Translate</button>
+          <button class="toggle-btn active">Write</button>
+          <button class="toggle-btn">Random</button>
+        </div>
+      </div>
+
+      <div class="mini-settings">
+        <div class="mini-section">
+          <div class="mini-left">
+            <span class="mini-label">Timer</span>
+            <div class="mini-toggle">
+              <button class="mini-toggle-btn active">OFF</button>
+              <button class="mini-toggle-btn">ON</button>
+            </div>
+          </div>
+          <div class="mini-divider"></div>
+          <div class="mini-right">
+            <div class="mini-input-box">
+              <input type="number" class="mini-input" value="30" min="1" />
+              <span class="mini-input-label">sec</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mini-section">
+          <div class="mini-left">
+            <span class="mini-label">Allow mistakes</span>
+            <div class="mini-toggle">
+              <button class="mini-toggle-btn active">OFF</button>
+              <button class="mini-toggle-btn">ON</button>
+            </div>
+          </div>
+          <div class="mini-divider"></div>
+          <div class="mini-right">
+            <div class="mini-input-box">
+              <input type="number" class="mini-input" value="3" min="1" />
+              <span class="mini-input-label">max</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="primary-btn" id="testBtn">Test</button>
+    </section>
+
+    <div style="height: 28px;"></div>
+  </div>
+
+  <!-- Study Area -->
+  <div class="study-area" id="studyArea">
+    <header class="settings-header">
+      <span class="settings-title">Study Area</span>
+      <button class="back-btn" id="backFromStudy">Back</button>
+    </header>
+    <div class="divider"></div>
+    <div class="study-content">
+      <section class="study-section">
+        <div class="study-label">Your word is</div>
+        <div class="word-display-box">
+          <div class="current-word" id="currentWord">Casa</div>
+          <div class="current-translation" id="currentTranslation">House</div>
+        </div>
+        <div class="input-section">
+          <input type="text" class="word-input" id="wordInput" placeholder="Type the word here..." />
+          <button class="enter-btn" id="enterBtn">ENTER</button>
+        </div>
+        <div class="repetition-progress" id="repetitionProgress">
+          <span class="progress-text">Repetitions: <span id="currentRep">0</span> / <span id="totalRep">5</span></span>
+        </div>
+        <div class="study-repetition-control">
+          <span class="study-rep-label">Change repetitions</span>
+          <input type="number" class="study-rep-input" id="studyRepInput" value="5" min="1" />
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Test Area -->
+  
+  <div class="test-area" id="testArea">
+    <header class="settings-header">
+      <span class="settings-title">Test Area</span>
+      <button class="back-btn" id="backFromTest">Back</button>
+    </header>
+    <div class="divider"></div>
+    <div class="test-content">
+      <div class="test-header-row">
+    <div class="test-label">Your word is</div>
+    <div class="test-timer" id="testTimer">30</div>
+  </div>
+
+  <div class="word-display-box">
+    <div class="current-word" id="testWord">Casa</div>
+  </div>
+        <div class="test-input-section">
+  <div class="input-section">
+    <input type="text" class="word-input" id="testInput" placeholder="Type your answer here..." />
+    <button class="enter-btn" id="testEnterBtn">ENTER</button>
+  </div>
+</div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- Save File Modal -->
+<div class="save-file-modal" id="saveFileModal">
+  <div class="save-file-content">
+    <div class="save-file-message" id="saveFileMessage">
+      Would you like to save this file to your account?
+    </div>
+    <div class="save-file-buttons">
+      <button class="save-file-btn yes" onclick="confirmSaveFile(true)">YES</button>
+      <button class="save-file-btn no" onclick="confirmSaveFile(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Replace File Modal -->
+<div class="replace-file-modal" id="replaceFileModal">
+  <div class="replace-file-content">
+    <div class="replace-file-message" id="replaceFileMessage">
+      A file with the same name already exists. Do you want to replace it?
+    </div>
+    <div class="replace-file-buttons">
+      <button class="replace-file-btn yes" onclick="confirmReplaceFile('replace')">YES - Replace</button>
+      <button class="replace-file-btn no" onclick="confirmReplaceFile('keep')">NO - Keep Both</button>
+      <button class="replace-file-btn cancel" onclick="confirmReplaceFile('cancel')">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete File Confirmation Modal -->
+<div class="confirm-modal" id="deleteFileModal">
+  <div class="confirm-content">
+    <div class="confirm-message" id="deleteFileMessage">
+      Are you sure you want to delete this file?
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="confirmDeleteFile(true)">YES</button>
+      <button class="confirm-btn no" onclick="confirmDeleteFile(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Account Confirmation Modal -->
+<div class="confirm-modal" id="deleteAccountModal">
+  <div class="confirm-content">
+    <div class="confirm-message" id="deleteAccountMessage">
+      Are you sure you want to delete this account?
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="confirmDeleteAccount(true)">YES</button>
+      <button class="confirm-btn no" onclick="confirmDeleteAccount(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="confirm-modal" id="logoutModal">
+  <div class="confirm-content">
+    <div class="confirm-message">
+      Are you sure you want to log out?
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="confirmLogout(true)">YES</button>
+      <button class="confirm-btn no" onclick="confirmLogout(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Exit Study Confirmation Modal -->
+<div class="confirm-modal" id="exitStudyModal">
+  <div class="confirm-content">
+    <div class="confirm-message">
+      Are you sure you want to exit study mode?
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="confirmExitStudy(true)">YES</button>
+      <button class="confirm-btn no" onclick="confirmExitStudy(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Exit Test Confirmation Modal -->
+<div class="confirm-modal" id="exitTestModal">
+  <div class="confirm-content">
+    <div class="confirm-message">
+      Are you sure you want to exit test mode?
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="confirmExitTest(true)">YES</button>
+      <button class="confirm-btn no" onclick="confirmExitTest(false)">NO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Account Modal -->
+<div class="modal-overlay" id="accountModal">
+  <div class="modal-content">
+    <button class="modal-close-button" onclick="closeAccountModal()">
+      <span class="close-icon"></span>
+    </button>
+    <div class="modal-header">
+      <h1 class="modal-title">Accounts</h1>
+    </div>
+    <div class="modal-body">
+      <div id="accountsContent"></div>
+      <button class="create-account-btn" id="createAccountBtn" onclick="showCreateAccountInput()">+</button>
+      <button class="logout-btn hidden" id="logoutBtn" onclick="logoutAccount()">LOG OUT</button>
+    </div>
+  </div>
+</div>
+
+<!-- From Account Modal -->
+<div class="modal-overlay" id="fromAccountModal">
+  <div class="modal-content">
+    <button class="modal-close-button" onclick="closeFromAccountModal()">
+      <span class="close-icon"></span>
+    </button>
+    <div class="modal-header">
+      <h1 class="modal-title">Select a file</h1>
+    </div>
+    <div class="modal-body">
+      <div id="fromAccountFiles"></div>
+    </div>
+  </div>
+</div>
+
+<!-- File Saved Success Modal -->
+<div class="confirm-modal" id="fileSavedModal">
+  <div class="confirm-content">
+    <div class="confirm-message" id="fileSavedMessage">
+      File saved to your account!
+    </div>
+    <div class="confirm-buttons">
+      <button class="confirm-btn yes" onclick="closeFileSavedModal()" style="width: 100%;">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Select Words Modal -->
+<div class="modal-overlay" id="selectWordsModal">
+  <div class="modal-content">
+    <button class="modal-close-button" onclick="closeSelectWordsModal()">
+      <span class="close-icon"></span>
+    </button>
+    <div class="modal-header">
+      <h1 class="modal-title">Select Words</h1>
+    </div>
+    <div class="modal-body">
+      <div id="wordsListContent"></div>
+      <button class="start-study-btn" id="startStudyBtn" onclick="startStudyWithSelectedWords()">START STUDY</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
